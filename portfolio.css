@@ -611,7 +611,7 @@ a.now-card:hover .logo-strip > img.art-cover {
   background: linear-gradient(135deg, #1a1a18 0%, #0d0d0c 100%);
 }
 
-.now-card.featured .art img {
+.now-card.featured .art img:not(.art-cover) {
   position: absolute;
   inset: 0;
   margin: auto;
