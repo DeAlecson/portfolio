@@ -952,6 +952,88 @@ a.card:hover .yr { color: var(--accent); }
   transition: transform var(--t-slow) var(--ease);
 }
 
+/* Iframe video variant — reuses .art-cover geometry, no img-only properties */
+iframe.art-cover, .art-video {
+  border: 0;
+  background: #000;
+  display: block;
+}
+
+/* Featured card with video — stack art on top so the video gets full width
+   in a clean 16:9 ratio at all viewports (no letterboxing/black bars) */
+.card.featured:has(iframe.art-video) {
+  flex-direction: column;
+}
+.card.featured:has(iframe.art-video) .art {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+}
+
+.case-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  min-width: 0;
+  margin-top: 0.25rem;
+}
+
+.card.featured .case-text p {
+  max-width: none;
+  margin: 0;
+  text-align: justify;
+  hyphens: auto;
+}
+
+/* Platform scope / feature grid (inside case-study cards) */
+.features {
+  margin-top: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--border);
+}
+
+.features-label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+  margin-bottom: 0.75rem;
+}
+
+.features-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.4rem 1.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.features-list li {
+  font-size: 0.8125rem;
+  color: var(--fg-2);
+  line-height: 1.5;
+  padding-left: 0.9rem;
+  position: relative;
+}
+
+.features-list li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  top: -0.1em;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 720px) {
+  .features-list { grid-template-columns: 1fr; }
+}
+
 /* Specific focal points per image */
 .art-kyocards .art-cover { object-position: center top; }      /* show site header */
 .art-studentassist .art-cover { object-position: center top; } /* show app header */
@@ -961,6 +1043,10 @@ a.card:hover .yr { color: var(--accent); }
 
 a.card:hover .art-cover { transform: scale(1.03); }
 a.now-card:hover .art-cover { transform: scale(1.03); }
+
+/* Don't scale video iframes on hover — avoids repaint flicker during playback */
+a.card:hover iframe.art-cover,
+a.now-card:hover iframe.art-cover { transform: none; }
 
 /* When art panel has a cover image: hide overlay corners + stripe (let the image speak) */
 .art:has(.art-cover) .corner,
